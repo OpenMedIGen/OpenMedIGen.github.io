@@ -1,0 +1,62 @@
+[
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+    "caption": "Beautiful landscape with a single tree in the foreground",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_1280.jpg",
+    "caption": "Colorful flower field during spring season",
+    "verified": false
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_1280.jpg",
+    "caption": "Long winding road through autumn forest",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/08/05/26/woman-1807533_1280.jpg",
+    "caption": "Portrait photography with natural lighting",
+    "verified": false
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg",
+    "caption": "Fantasy landscape with magical elements",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_1280.jpg",
+    "caption": "Starry night sky with Milky Way galaxy",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_1280.jpg",
+    "caption": "Mountain landscape with fog and pine trees",
+    "verified": false
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_1280.jpg",
+    "caption": "Tropical beach with crystal clear water",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/19/18/57/germany-1840972_1280.jpg",
+    "caption": "Historic European architecture at sunset",
+    "verified": false
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2017/03/02/16/54/ice-cream-2111694_1280.jpg",
+    "caption": "Delicious ice cream with vibrant colors",
+    "verified": true
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/22/19/15/hand-1850120_1280.jpg",
+    "caption": "Abstract art with hands and paint",
+    "verified": false
+  },
+  {
+    "image_url": "https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg",
+    "caption": "Ocean waves crashing against rocks",
+    "verified": true
+  }
+]
