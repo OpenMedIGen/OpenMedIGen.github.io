@@ -265,7 +265,7 @@
 .verified-badge {
   position: absolute;
   top: 12px;
-  right: 12px;
+  left: 12px;
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
   padding: 0.5rem 0.75rem;
@@ -281,6 +281,125 @@
 
 .verified-badge i {
   font-size: 0.7rem;
+}
+
+/* Gallery Action Buttons */
+.gallery-action-buttons {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: var(--transition);
+}
+
+.gallery-item:hover .gallery-action-buttons {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-action-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-md);
+  font-size: 0.9rem;
+}
+
+.gallery-action-btn:hover {
+  background: white;
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-action-btn.zoom-btn:hover {
+  color: #3b82f6;
+}
+
+.gallery-action-btn.download-btn:hover {
+  color: #10b981;
+}
+
+/* Image Modal Styles */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.image-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.image-modal-caption {
+  color: white;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  max-width: 600px;
+}
+
+/* Download Feedback */
+.download-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Caption Overlay */
@@ -409,9 +528,20 @@
   
   .verified-badge {
     top: 8px;
-    right: 8px;
+    left: 8px;
     padding: 0.4rem 0.6rem;
     font-size: 0.7rem;
+  }
+  
+  .gallery-action-buttons {
+    top: 8px;
+    right: 8px;
+  }
+  
+  .gallery-action-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8rem;
   }
 }
 

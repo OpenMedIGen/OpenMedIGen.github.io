@@ -153,13 +153,41 @@ class GalleryManager {
         
         imageContainer.appendChild(img);
         
-        // Add verified badge if verified
+        // Add verified badge if verified (moved to top-left)
         if (item.verified) {
             const verifiedBadge = document.createElement('div');
             verifiedBadge.className = 'verified-badge';
             verifiedBadge.innerHTML = '<i class="fas fa-check"></i> Verified';
             imageContainer.appendChild(verifiedBadge);
         }
+        
+        // Add action buttons (zoom and download)
+        const actionButtons = document.createElement('div');
+        actionButtons.className = 'gallery-action-buttons';
+        
+        // Zoom button
+        const zoomButton = document.createElement('button');
+        zoomButton.className = 'gallery-action-btn zoom-btn';
+        zoomButton.setAttribute('aria-label', 'Zoom image');
+        zoomButton.innerHTML = '<i class="fas fa-search-plus"></i>';
+        zoomButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.openImageModal(item.image_url, item.caption);
+        });
+        
+        // Download button
+        const downloadButton = document.createElement('button');
+        downloadButton.className = 'gallery-action-btn download-btn';
+        downloadButton.setAttribute('aria-label', 'Download image');
+        downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+        downloadButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.downloadImage(item.image_url, item.caption || 'image');
+        });
+        
+        actionButtons.appendChild(zoomButton);
+        actionButtons.appendChild(downloadButton);
+        imageContainer.appendChild(actionButtons);
         
         // Add caption overlay
         if (item.caption) {
@@ -423,6 +451,183 @@ class GalleryManager {
                 this.pageJumpInput.classList.remove('is-danger');
             }, 2000);
         }
+    }
+    
+    openImageModal(imageUrl, caption) {
+        // Create modal overlay
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'image-modal-overlay';
+        modalOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.className = 'image-modal-content';
+        modalContent.style.cssText = `
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        `;
+        
+        // Create image
+        const modalImage = document.createElement('img');
+        modalImage.src = imageUrl;
+        modalImage.alt = caption || 'Enlarged image';
+        modalImage.style.cssText = `
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+        `;
+        
+        // Create caption
+        if (caption) {
+            const modalCaption = document.createElement('div');
+            modalCaption.className = 'image-modal-caption';
+            modalCaption.style.cssText = `
+                color: white;
+                text-align: center;
+                margin-top: 1rem;
+                font-size: 1.1rem;
+                max-width: 600px;
+            `;
+            modalCaption.textContent = caption;
+            modalContent.appendChild(modalCaption);
+        }
+        
+        // Create close button
+        const closeButton = document.createElement('button');
+        closeButton.className = 'image-modal-close';
+        closeButton.innerHTML = '<i class="fas fa-times"></i>';
+        closeButton.style.cssText = `
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        `;
+        closeButton.addEventListener('click', () => {
+            modalOverlay.style.opacity = '0';
+            setTimeout(() => {
+                if (modalOverlay.parentNode) {
+                    modalOverlay.parentNode.removeChild(modalOverlay);
+                }
+            }, 300);
+        });
+        
+        // Close modal when clicking overlay
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (modalOverlay.parentNode) {
+                        modalOverlay.parentNode.removeChild(modalOverlay);
+                    }
+                }, 300);
+            }
+        });
+        
+        // Close modal with Escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                modalOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (modalOverlay.parentNode) {
+                        modalOverlay.parentNode.removeChild(modalOverlay);
+                    }
+                }, 300);
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+        
+        // Assemble modal
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(modalImage);
+        modalOverlay.appendChild(modalContent);
+        document.body.appendChild(modalOverlay);
+        
+        // Animate in
+        setTimeout(() => {
+            modalOverlay.style.opacity = '1';
+        }, 10);
+    }
+    
+    downloadImage(imageUrl, filename) {
+        // Create a temporary anchor element to trigger download
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        
+        // Extract file extension from URL or use default
+        const fileExtension = imageUrl.split('.').pop()?.toLowerCase() || 'jpg';
+        link.download = `${filename.replace(/[^a-zA-Z0-9]/g, '_')}.${fileExtension}`;
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Show download feedback
+        this.showDownloadFeedback();
+    }
+    
+    showDownloadFeedback() {
+        // Create feedback element
+        const feedback = document.createElement('div');
+        feedback.className = 'download-feedback';
+        feedback.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            font-weight: 600;
+        `;
+        feedback.innerHTML = '<i class="fas fa-check"></i> Download started';
+        
+        document.body.appendChild(feedback);
+        
+        // Animate in
+        setTimeout(() => {
+            feedback.style.transform = 'translateX(0)';
+        }, 10);
+        
+        // Animate out and remove
+        setTimeout(() => {
+            feedback.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (feedback.parentNode) {
+                    feedback.parentNode.removeChild(feedback);
+                }
+            }, 300);
+        }, 3000);
     }
 }
 
