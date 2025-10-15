@@ -751,3 +751,18 @@ a:focus {
 
 
 
+
+/* Video annotation styling */
+.video-annotation {
+  color: #94a3b8; /* 淡灰色 */
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5rem;
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.video-annotation:hover {
+  opacity: 0.9;
+}
