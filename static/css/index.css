@@ -597,6 +597,16 @@ code {
   flex-shrink: 0;
 }
 
+/* Team and BibTeX Section Spacing */
+#team {
+  padding-bottom: 2rem;
+}
+
+#BibTeX {
+  padding-top: 3rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0;
+}
 
 /* Mobile Responsive Improvements */
 @media screen and (max-width: 768px) {
